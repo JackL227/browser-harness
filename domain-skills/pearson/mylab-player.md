@@ -30,3 +30,7 @@ The interactive graph widget is a `.graphControl` Dijit widget with a `_graphMan
 Graph labels are widgets, not strings. Do not pass plain text to an object's `setObjLabel`. Inspect the existing label widget's `getLabelOptions()` and use the exact option text. Labels can use markup such as `AE@sub{1}`, and the available label may differ from the wording used in the prompt.
 
 These mechanics are UI details only. Determine the user's authorized scope and whether the activity is practice or graded before making submissions.
+
+### Exact fractions and interval symbols
+
+The legacy equation editor uses `@DIV{numerator;denominator}` for fractions, `@RT{radicand}` for square roots, `&inf;` for infinity, and `&cup;` for union. A literal slash can render as division yet fail interval-answer grading; use the fraction template for interval endpoints. Literal Unicode infinity and union can silently disappear in `setEqText`. Verify the rendered answer before checking. Active equation editor IDs can vary between questions; re-read enabled `.eqEditor` elements for each part.
