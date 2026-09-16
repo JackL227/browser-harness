@@ -17,6 +17,8 @@ The course shell at `mylabmastering.pearson.com/courses/<course>/menu/<menu>` em
 Prefer visible UI actions and screenshot verification. When a legacy control requires an inspection fallback, `.xlFillinItem` holds dropdown widget IDs and `.eqEditor` holds equation-editor IDs; `dijit.byId(id)` retrieves the widget. IDs can change between questions.
 
 - Equation-editor widgets have `getEqText`, `clear`, `setEqText`, and `setChanged`. A value update needs the change notification before the checker enables.
+- `setEqText` uses Pearson equation markup for structured expressions: for example, `e@sup{ax}` displays an exponential. Ordinary caret syntax with parenthesized exponents can throw a parse error. Check the returned CDP exception and rendered expression before submitting.
+- Raw key dispatch can insert characters twice in the math editor, while `Input.insertText` may insert nothing. Verify the displayed entry before checking; use the equation widget fallback when normal input is unreliable.
 - Dropdown widgets lazily construct their menu with `loadDropDown`. Menu children contain a visual and spoken math representation, so raw `innerText` may contain duplicated labels. Inspect `containerNode.innerText` or the menu's label options before matching a choice.
 - Setting a radio's framework property can change its appearance without triggering the player's answer-change handling. A compositor click reliably triggers that handling.
 - Wrap inspection JavaScript declarations in an IIFE. Repeated top-level `let` declarations in the same execution context can fail with lexical redeclaration errors.
